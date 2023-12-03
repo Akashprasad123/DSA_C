@@ -32,9 +32,18 @@
                 }else{
                     p = *s-1;
                 }
-                if(Queue[p]<num || p == *f){
+                if(p == *f){
                     Queue[p] = num;
                     break;
+                }
+                if(Queue[p]<num){
+                    p = (p+1)%(*s);
+                    Queue[p] = num;
+                    break;
+                }else{
+                    temp = Queue[p];
+                    p = (p+1)%(*s);
+                    Queue[p]=temp;
                 }
             }
         }
@@ -64,7 +73,7 @@
             item = Cqueue[*f];
             *f = (*f+1)%(*s);
             printf("%d is deleted from the queue\n",item);
-            if(*f>*r && *f==(*r+1)%(*s)){
+            if(*f==(*r+1)%(*s)){
                 printf("All items in the queue are deleted.\n");
                 *f = -1;
                 *r = -1;

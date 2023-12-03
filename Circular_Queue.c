@@ -36,7 +36,7 @@
             item = Cqueue[*f];
             *f = (*f+1)%(*s);
             printf("%d is deleted from the queue\n",item);
-            if(*f>*r && *f==(*r+1)%(*s)){
+            if(*f==(*r+1)%(*s)){
                 printf("All items in the queue are deleted.\n");
                 *f = -1;
                 *r = -1;
