@@ -16,7 +16,7 @@
 
     void SortAndAdd(int Queue[], int num, int *r, int *f, int *s){
         int p;
-        int temp;
+        int temp,t;
         if(Queue[*r] <= num || *r==-1){
             *r = (*r+1)%(*s);
             Queue[*r] = num;
@@ -26,24 +26,24 @@
             *r = (*r+1)%(*s);
             Queue[*r]=temp;
             while(1){
-                printf("check");
-                if(p!=0){
-                    p = (p-1)%(*s);
-                }else{
-                    p = *s-1;
-                }
-                if(p == *f){
-                    Queue[p] = num;
-                    break;
-                }
-                if(Queue[p]<num){
-                    p = (p+1)%(*s);
+                if(p==*f){
                     Queue[p] = num;
                     break;
                 }else{
-                    temp = Queue[p];
-                    p = (p+1)%(*s);
-                    Queue[p]=temp;
+                    if(p!=0){
+                        p = (p-1)%(*s);
+                    }else{
+                        p = *s-1;
+                    }
+                    if(Queue[p]<=num){
+                        p = (p+1)%(*s);
+                        Queue[p]=num;
+                        break;
+                    }else{
+                        temp = Queue[p];
+                        t = (p+1)%(*s);
+                        Queue[t]=temp;
+                    }
                 }
             }
         }
@@ -61,8 +61,6 @@
             printf("Enter the element to add : ");
             scanf("%d",&num);
             SortAndAdd(Cqueue, num, r, f, s);
-            // *r = (*r+1)%(*s);
-            // Cqueue[*r] = num;
             printf("%d added to the queue\n",num);
         }
     }
