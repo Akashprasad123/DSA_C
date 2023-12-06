@@ -156,7 +156,7 @@
         temp = head;
         if(temp != NULL){
             while(temp != NULL){
-                printf("%d",temp->data);
+                printf("%d\n",temp->data);
                 temp = temp->next;
             }
         }else{
