@@ -158,11 +158,6 @@
             while(temp != NULL){
                 printf("%d",temp->data);
                 temp = temp->next;
-                // printf("%d\n",temp->data);
-                // temp = temp->next;
-                // if(temp->next == NULL){
-                //     printf("%d\n",temp->data);
-                //     break;
             }
         }else{
             printf("Nothing to print");
