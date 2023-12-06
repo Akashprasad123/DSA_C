@@ -13,14 +13,14 @@
         printf("\n\n-------------------------------------------\n");
         printf("             SELECT AN OPERATION               ");
         printf("\n-------------------------------------------\n");
-        printf("TO ADD AN ELEMENT AT BEGINING : 1\n");
-        printf("TO ADD AN ELEMENT AT END : 2\n");
-        printf("TO ADD AN ELEMENT AT A SPECIFIC POSITION : 3\n");
-        printf("TO DELETE AN ELEMENT FROM BEGINNING : 4\n");
-        printf("TO DELETE AN ELEMENT FROM END : 5\n");
-        printf("TO DELETE AN ELEMENT FROM SPECIFIC POSITION : 6\n");
-        printf("TO DISPLAY CURRENT ELEMENTS : 7\n");
-        printf("TO EXIT THE PROGRAM : 8\n\n");
+        printf("1 : TO ADD AN ELEMENT AT BEGINING\n");
+        printf("2 : TO ADD AN ELEMENT AT END\n");
+        printf("3 : TO ADD AN ELEMENT AT A SPECIFIC POSITION\n");
+        printf("4 : TO DELETE AN ELEMENT FROM BEGINNING\n");
+        printf("5 : TO DELETE AN ELEMENT FROM END\n");
+        printf("6 : TO DELETE AN ELEMENT FROM SPECIFIC POSITION\n");
+        printf("7 : TO DISPLAY CURRENT ELEMENTS\n");
+        printf("8 : TO EXIT THE PROGRAM\n\n");
         printf("Enter the choice : ");
     }
 
@@ -30,7 +30,7 @@
         ptr = (struct node *)malloc(sizeof(struct node));
 
         if(ptr == NULL){
-            printf("Overflow. Out of Memory");
+            printf("Overflow. Out of Memory\n");
         }else{
             printf("Enter the element to add : ");
             scanf("%d",&item);
@@ -48,7 +48,7 @@
         struct node *temp;
 
         if(ptr == NULL){
-            printf("Overflow. Out of Memory");
+            printf("Overflow. Out of Memory\n");
         }else{
             printf("Enter the element to add : ");
             scanf("%d",&item);
@@ -73,17 +73,101 @@
     }
 
 
-    void Display(){
+    void AddAt(){
+        struct node *ptr = (struct node *)malloc(sizeof(struct node));
         struct node *temp;
-        temp = head;
+        int pos, item;
+        
+        if(ptr == NULL){
+            printf("Overflow. Out of Memory\n");
+        }else{
+            printf("Enter the position, after which you want to add the element : ");
+            scanf("%d",&pos);
+            printf("Enter the element  : ");
+            scanf("%d",&item);
+            ptr->data = item;
+            temp = head;
+            for(int i=0; i<pos; i++){
+                temp = temp->next;
+                if(temp->next==NULL){
+                    printf("Element is not added");
+                    return;
+                }
+            }
+            ptr->next = temp->next;
+            temp->next = ptr;
+            printf("Element added");
+        }
+    }
+
+
+    void DeleteBegin(){
+        struct node *ptr;
+        if(head == NULL){
+            printf("No elements to delete");
+        }else{
+            ptr = head;
+            head = ptr->next;
+            free(ptr);
+            printf("Element deleted");
+        }
+    }
+
+    void DeleteEnd(){
+        struct node *ptr, *preptr;
+        ptr = head;
         while(1){
-            printf("%d\n",temp->data);
-            temp = temp->next;
-            if(temp->next == NULL){
-                printf("%d\n",temp->data);
+            if(ptr->next!=NULL){
+                preptr = ptr;
+                ptr = ptr->next;
+                continue;
+            }else{
+                preptr->next = NULL;
+                free(ptr);
+                printf("Element deleted");
                 break;
             }
         }
+    }
+
+    void DeleteAt(){
+        struct node *ptr, *temp;
+        int pos;
+        ptr = head;
+        printf("Enter the position, after which you want to delete the element : ");
+        scanf("%d",&pos);
+        temp = head;
+        for(int i=0; i<pos; i++){
+            temp = temp->next;
+            if(temp->next == NULL){
+                printf("Invalid position. Can't delete.");
+                return;
+            }
+        }
+        ptr = temp->next;
+        temp->next = ptr->next;
+        free(ptr);
+        printf("Element deleted");
+    }
+
+
+    void Display(){
+        struct node *temp;
+        temp = head;
+        if(temp != NULL){
+            while(temp != NULL){
+                printf("%d",temp->data);
+                temp = temp->next;
+                // printf("%d\n",temp->data);
+                // temp = temp->next;
+                // if(temp->next == NULL){
+                //     printf("%d\n",temp->data);
+                //     break;
+            }
+        }else{
+            printf("Nothing to print");
+        }
+        
     }
 
 
@@ -100,18 +184,18 @@
                 case 2 :
                     AddEnd();
                     break;
-                // case 3 :
-                //     AddAt();
-                //     break;
-                // case 4 :
-                //     DeleteBegin();
-                //     break;
-                // case 5 :
-                //     DeleteEnd();
-                //     break;
-                // case 6 :
-                //     DeleteAt();
-                //     break;
+                case 3 :
+                    AddAt();
+                    break;
+                case 4 :
+                    DeleteBegin();
+                    break;
+                case 5 :
+                    DeleteEnd();
+                    break;
+                case 6 :
+                    DeleteAt();
+                    break;
                 case 7 :
                     Display();
                     break;
@@ -120,9 +204,7 @@
                     break;
                 default:
                     printf("Invalid Entry. Choose a valid option.\n\n");
-                    
             }
-
         }
         return 0;
     }
