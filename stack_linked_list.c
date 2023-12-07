@@ -33,13 +33,31 @@
         }
     }
 
-    void dispaly(){
+    void pop(){
+        struct node *temp;
+        if(top == NULL){
+            printf("Stack Underflow. No elements to delete");
+        }else{
+            temp = top;
+            top = top->next;
+            free(temp);
+            printf("Element deleted");
+        }
+    }
+
+    void display(){
         struct node *temp;
 
         if(top == NULL){
             printf("Stack Underflow. No elements to display");
         }else{
-            
+            temp = top;
+            if(temp!=NULL){
+                while(temp!=NULL){
+                    printf("%d\n",temp->data);
+                    temp = temp->next;
+                }
+            }
         }
 
     }
@@ -56,9 +74,9 @@
                 case 1:
                     push();
                     break;
-                // case 2:
-                //     pop();
-                //     break;
+                case 2:
+                    pop();
+                    break;
                 case 3:
                     display();
                     break;
